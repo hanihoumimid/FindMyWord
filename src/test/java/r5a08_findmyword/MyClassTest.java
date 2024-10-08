@@ -1,4 +1,4 @@
-package r5a08.example.project;
+package r5a08_findmyword;
 
 public class MyClassTest {
 }

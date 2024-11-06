@@ -1,7 +1,10 @@
 package r5a08_findmyword;
+import r5a08_findmyword.Word;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import r5a08_findmyword.domain.Letter;
+import r5a08_findmyword.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,12 +13,12 @@ public class WordTest {
     public void should_check_one_incorrect_letter(){
         // Arrange
         Word word = new Word("E");
-
         // Act
         Score score = word.guess("B");
-        Letter expected = score.letter(0);
+
         // Assert
-        assertScoreForLetter(score,0,expected);
+        assertThat(score.letter(0)).isEqualTo(Letter.INCORRECT);
+
     }
 
     @Test
@@ -25,40 +28,31 @@ public class WordTest {
 
         // Act
         Score score = word.guess("E");
-        Letter expected = score.letter(0);
 
         // Assert
-        assertScoreForLetter(score,0,expected);
+        assertThat(score.letter(0)).isEqualTo(Letter.CORRECT);
     }
 
     @Test
-    public void should_check_two_correct_letter(){
+    void should_check_second_letter_wrong_position(){
         // Arrange
         Word word = new Word("EX");
 
         // Act
-        Score score = word.guess("EX");
-        Letter actual = score.letter(1);
-        Letter expected = Letter.CORRECT;
+        Score score = word.guess("GE");
 
         // Assert
-        assertScoreForLetter(score,1,expected);
+        assertScoreForLetter(score, 1, Letter.PART_CORRECT);
     }
 
     @Test
-    public void should_check_two_incorrect_letter(){
-        // Arrange
-        Word word = new Word("EX");
-
-        // Act
-        Score score = word.guess("EFX");
-        Letter actual = score.letter(1);
-        Letter expected = Letter.CORRECT;
-
-        // Assert
-        assertScoreForLetter(score,1,expected);
+    void should_check_all_score_combinaison_correct(){
+        Word word = new Word("EMT");
+        Score score = word.guess("GET");
+        assertScoreForLetter(score, 0, Letter.INCORRECT);
+        assertScoreForLetter(score, 1, Letter.PART_CORRECT);
+        assertScoreForLetter(score, 2, Letter.CORRECT);
     }
-
     private void assertScoreForLetter(Score score, int position, Letter expected) {
         assertThat(score.letter(position))
                 .isEqualTo(expected);

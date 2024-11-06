@@ -1,5 +1,7 @@
 package r5a08_findmyword;
 
+import r5a08_findmyword.domain.Score;
+
 public class Word {
     private String word;
 

@@ -1,4 +1,4 @@
-package r5a08_findmyword;
+package r5a08_findmyword.domain; //ajouter domain pour créer le package
 
 
 public enum Letter {

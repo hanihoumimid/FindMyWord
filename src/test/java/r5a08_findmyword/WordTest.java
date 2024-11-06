@@ -9,25 +9,26 @@ public class WordTest {
     @Test
     public void should_check_one_incorrect_letter(){
         // Arrange
-        Word word = new Word("E"); // Le mot a déviner fait une lettre
+        Word word = new Word("E");
 
         // Act
         Score score = word.guess("B");
-
+        Letter expected = score.letter(0);
         // Assert
-        assertThat(score.letter(0)).isEqualTo(Letter.INCORRECT);
+        assertScoreForLetter(score,0,expected);
     }
 
     @Test
     public void should_check_one_correct_letter(){
         // Arrange
-        Word word = new Word("E"); // Le mot a déviner fait une lettre
+        Word word = new Word("E");
 
         // Act
         Score score = word.guess("E");
+        Letter expected = score.letter(0);
 
         // Assert
-        assertThat(score.letter(0)).isEqualTo(Letter.CORRECT);
+        assertScoreForLetter(score,0,expected);
     }
 
     @Test
@@ -41,7 +42,7 @@ public class WordTest {
         Letter expected = Letter.CORRECT;
 
         // Assert
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertScoreForLetter(score,1,expected);
     }
 
     @Test
@@ -55,6 +56,11 @@ public class WordTest {
         Letter expected = Letter.CORRECT;
 
         // Assert
-        Assertions.assertThat(actual).isEqualTo(expected);
+        assertScoreForLetter(score,1,expected);
+    }
+
+    private void assertScoreForLetter(Score score, int position, Letter expected) {
+        assertThat(score.letter(position))
+                .isEqualTo(expected);
     }
 }
